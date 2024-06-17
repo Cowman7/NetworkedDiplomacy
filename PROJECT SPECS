@@ -1,0 +1,17 @@
+☒   BLOWFISH ENCRYPTION?
+☑   ☑ RSA ☒ ELLIPTICAL
+☑   JAVA KEYRING
+☑   ARCFOUR ENCRYPTION
+☐   LOBBY DISPLAY
+☐   JAVA SQL? --MAYBE
+
+
+TESTING:
+  ☐ RSA Handshake:
+    ☐ Initial shake
+    ☐ Subsequent shake
+    ☐ Corrupted server pubkey shake
+  ☐ 
+  ☐ 
+  ☐ 
+  ☐ 
