@@ -62,7 +62,7 @@ public class EncryptionHandler {
 
         String incoming_message = new String(readData(server_in));
         if (!"sending_receiving_keys".equals(incoming_message.trim())) {
-            throw new Exception("Invalid handshake response");
+            throw new Exception("Invalid handshake response: " + incoming_message);
         }
         System.out.println("Established Connection");
 
