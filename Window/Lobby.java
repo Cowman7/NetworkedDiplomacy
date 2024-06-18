@@ -39,8 +39,9 @@ public class Lobby {
     // List of lobby members, each member is represented as a tuple of player name and image bytes
     private ArrayList<Tuple<String, byte[]>> lobby_members = new ArrayList<Tuple<String, byte[]>>(7);
     
-    // Array of JLabels to display player usernames
+    // Array of JLabels to display player usernames and country names
     private JLabel[] player_labels = new JLabel[7];
+    private JLabel[] country_labels = new JLabel[7];
     
     // Main window for the lobby
     private MainWindow window;
@@ -106,6 +107,7 @@ public class Lobby {
         for (COUNTRIES country : COUNTRIES.values()) {
             JLabel country_name = new JLabel(country.toString());
             contentPane.add(country_name, Integer.valueOf(1)); // has to be added before logic or it doesn't render
+            country_labels[country.getValue()] = country_name;
             
             // Set properties for country labels
             country_name.setOpaque(true); // Needs to be opaque for background to render
@@ -214,6 +216,7 @@ public class Lobby {
                 if (!text.startsWith("AI")) {
                     new ImageIcon(getClass().getResource("AI_pic.png"));
                 }
+
                 continue;
             }
 
@@ -225,8 +228,13 @@ public class Lobby {
                 // Adjust label width if the text width exceeds the default width
                 int font_width =  player_labels[i].getFontMetrics(player_labels[i].getFont()).stringWidth(player_labels[i].getText()) + 5;
                 if (font_width > 64) {
-                    Rectangle bounds = player_labels[i].getBounds();
-                    player_labels[i].setBounds(bounds.x - (font_width / 4), bounds.y, font_width, bounds.height);
+                    Rectangle user_bounds = player_labels[i].getBounds();
+
+                    player_labels[i].setBounds(user_bounds.x - (font_width / 4), user_bounds.y, font_width, user_bounds.height);
+
+                    Rectangle country_bounds = country_labels[i].getBounds();
+                    country_labels[i].setBounds(user_bounds.x - (font_width / 4), country_bounds.y, font_width, country_bounds.height);
+                    
                 }
             }
         }
