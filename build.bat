@@ -1,5 +1,5 @@
 @echo off
-set exclude=Elements testing
+set exclude=Elements testing .git
 
 
 setlocal EnableDelayedExpansion
