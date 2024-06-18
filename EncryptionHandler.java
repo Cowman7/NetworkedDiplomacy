@@ -176,7 +176,7 @@ public class EncryptionHandler {
         sendMessage("uuid_recv", out);
     }
 
-    public void sendData(byte[] data, DataOutputStream out) throws IOException {
+    private void sendData(byte[] data, DataOutputStream out) throws IOException {
         int length = data.length;
         if (length <= 0) {
             System.err.println("Data null or zero length");
@@ -190,7 +190,7 @@ public class EncryptionHandler {
         out.write(data);
     }
 
-    public byte[] readData(DataInputStream server_in) throws IOException {
+    private byte[] readData(DataInputStream server_in) throws IOException {
         int data_length = 0;
         byte length_byte = server_in.readByte();
         while (length_byte == 127) {
