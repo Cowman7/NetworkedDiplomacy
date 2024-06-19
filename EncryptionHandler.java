@@ -214,6 +214,19 @@ public class EncryptionHandler {
         return 0;
     }
 
+    public int sendBytes(byte[] message, DataOutputStream out) {
+        try {
+            Cipher arc4Cipher = Cipher.getInstance("ARCFOUR");
+            arc4Cipher.init(Cipher.ENCRYPT_MODE, arc4Key);
+            byte[] encrypted_message = arc4Cipher.doFinal(message);
+            sendData(encrypted_message, out);
+        } catch (Exception e) {
+            System.err.println("Error sending message: " + e);
+            return 1;
+        }
+        return 0;
+    }
+
     public byte[] receiveBytes(DataInputStream server_in) {
         try {
             byte[] encryptedData = readData(server_in);
