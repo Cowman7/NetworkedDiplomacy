@@ -75,6 +75,7 @@ public class ProfileEditor implements ActionListener {
         JButton cont = new JButton("Continue to Lobby");
         window.add(cont);
         cont.setBounds(15, 225, 150, 25);
+        cont.addActionListener(this);
         cont.setActionCommand("end_profile_change");
         
         addImageSection();
@@ -103,7 +104,9 @@ public class ProfileEditor implements ActionListener {
         window.add(error, 2);
         error.setBounds(25, 80, 200, 60);
 
+        submit.addActionListener(this);
         submit.setActionCommand("update_username");
+        
     }
 
     private void addImageSection() {
@@ -113,24 +116,24 @@ public class ProfileEditor implements ActionListener {
 
         Image img = new ImageIcon(current_image).getImage().getScaledInstance(125, 125, java.awt.Image.SCALE_SMOOTH);
         JLabel image_label = new JLabel(new ImageIcon(img));
-        window.add(image_label);
+        window.add(image_label, 4);
         image_label.setBounds(250, 35, 125, 125);
 
         JButton upload_button = new JButton("Upload New Image");
         window.add(upload_button);
         upload_button.setBounds(225, 175, 150, 25);
 
+        upload_button.addActionListener(this);
         upload_button.setActionCommand("upload_image");
     }
 
     public void actionPerformed(ActionEvent event) {
-        System.out.println("Action");
         switch(event.getActionCommand()) {
             case "update_username":
                 updateUsername();
             break;
             case "upload_image":
-                updateImage((JLabel)event.getSource());
+                updateImage();
             break;
             case "end_profile_change":
                 finished = true;
@@ -139,15 +142,14 @@ public class ProfileEditor implements ActionListener {
     }
 
     private void updateUsername() {
-        System.out.println("oi");
-        JTextField text = (JTextField)window.getComponent(1);
+        JTextField text = (JTextField)window.getContentPane().getComponent(1);
         String input = text.getText();
         
-        JLabel error = (JLabel)window.getComponent(2);
+        JLabel error = (JLabel)window.getContentPane().getComponent(2);
         if (!inputCheck(input, error)) return;
         error.setText("");
         
-        JLabel name_label = (JLabel)window.getComponent(0);
+        JLabel name_label = (JLabel)window.getContentPane().getComponent(0);
         name_label.setText("Current name: " + input);
         new_playername = input;
 
@@ -174,7 +176,9 @@ public class ProfileEditor implements ActionListener {
         return true;
     }
 
-    private void updateImage(JLabel image_label) {
+    private void updateImage() {
+        JLabel image_label = (JLabel)window.getContentPane().getComponent(4);
+
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "jpeg", "bmp");
 
