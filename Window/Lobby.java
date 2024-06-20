@@ -47,9 +47,8 @@ public class Lobby {
     private MainWindow window;
     
     // Constructor for the Lobby class
-    public Lobby() {}
-
-    public void initialize() {
+    public Lobby() {
+        
         // Set the title with a possible random addition from addedStrings
         String title = "Diplomacy Lobby";
         int rand = (int)(Math.random() * Math.ceil((double)(addedStrings.length * 1.5)));
@@ -60,11 +59,11 @@ public class Lobby {
         // Initialize the main window
         window = new MainWindow(title);
         window.setLayout(null); // Use null layout to manually set component positions
-        window.initialize();
+        window.create();
     }
 
     public void buildWindow() {
-        initialize();
+        window.setVisible(true);
         // Create content pane with null layout
         JPanel contentPane = new JPanel(null);
         contentPane.setOpaque(false); // Make content pane transparent
@@ -78,6 +77,9 @@ public class Lobby {
         JLabel map = buildMap();
         window.add(map);
         map.setBounds(0, 0, 1047, 900); // Set the bounds for the map label
+        updateDisplay();
+
+        
     }
 
     private JLabel buildMap() {
@@ -197,7 +199,7 @@ public class Lobby {
         for (int i = 0; i < lobby_members.size(); i++) {
             Tuple<String, byte[]> iter = lobby_members.get(i);
             if (iter.x.contains("(You)")) {
-                lobby_members.set(i, new_profile);
+                lobby_members.set(i, new Tuple<String,byte[]>(new_profile.x + " (You)", new_profile.y));
                 break;
             }
         }
@@ -207,17 +209,6 @@ public class Lobby {
 
     public void memberAssembly(String playername, byte[] image_bytes) {
         lobby_members.add(new Tuple<String, byte[]>(playername, image_bytes));
-    }
-
-    public void memberAssembly(ArrayList<Tuple<String, byte[]>> members) {
-        for (int i = 0; i < members.size(); i++) {
-            lobby_members.add(members.get(i));
-        }
-        updateDisplay();
-    }
-
-    public ArrayList<Tuple<String, byte[]>> getPlayers() {
-        return lobby_members;
     }
 
     // Add a new lobby member
@@ -258,8 +249,11 @@ public class Lobby {
 
             // Update the player label if it has changed
             if (!player_labels[i].getText().equals(lobby_members.get(i).x)) {
-                player_labels[i].setIcon(new ImageIcon(lobby_members.get(i).y));
-                player_labels[i].setText(lobby_members.get(i).x);
+                Image scaled_image = new ImageIcon(lobby_members.get(i).y).getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+                player_labels[i].setIcon(new ImageIcon(scaled_image));
+
+                String text = lobby_members.get(i).x;
+                player_labels[i].setText(text);
 
                 // Adjust label width if the text width exceeds the default width
                 int font_width =  player_labels[i].getFontMetrics(player_labels[i].getFont()).stringWidth(player_labels[i].getText()) + 5;
@@ -270,7 +264,6 @@ public class Lobby {
 
                     Rectangle country_bounds = country_labels[i].getBounds();
                     country_labels[i].setBounds(user_bounds.x - (font_width / 4), country_bounds.y, font_width, country_bounds.height);
-                    
                 }
             }
         }
