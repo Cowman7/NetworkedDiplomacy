@@ -1,4 +1,4 @@
-☐ Implement username saving on server through keyring
+✔ Implement username saving on server through keyring @started(24-06-20 03:00) @done(24-06-20 03:13) @lasted(13m59s)
 
 ☐ Add profile edit and start game buttons to lobby
     - May need to pass Peer element down to Lobby
