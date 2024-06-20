@@ -1,0 +1,27 @@
+☐ Implement username saving on server through keyring
+
+☐ Add profile edit and start game buttons to lobby
+    - May need to pass Peer element down to Lobby
+
+☐ Check that multiple users work for lobby
+
+☐ Check that game start implementation works correctly
+
+☐ Create Main game window
+    - Pass current window into new function for destruction use
+        - Get current content pane and new content pane and then put them into a content pane?
+            - When the old items are ready to be deleted schmoove the new content pane into the content pane slot
+    - Try to add fading into game
+        - Load Navy and Army components
+        - Load new map
+        - Fade map in
+        - Fade toops in
+        - Dereference old map and buttons
+
+☐ Create Navy and Army Components (static in a file) for easy addition to window
+
+☐ Gamestate
+    - Peer: send moves in form of current location, type, of order, target location
+    - Server: recieve moves, do another validity check, then rectify moves (use queue for checking?)
+
+☐ Add Year into top right 
