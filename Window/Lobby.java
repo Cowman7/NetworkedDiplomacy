@@ -47,7 +47,9 @@ public class Lobby {
     private MainWindow window;
     
     // Constructor for the Lobby class
-    public Lobby() {
+    public Lobby() {}
+
+    public void initialize() {
         // Set the title with a possible random addition from addedStrings
         String title = "Diplomacy Lobby";
         int rand = (int)(Math.random() * Math.ceil((double)(addedStrings.length * 1.5)));
@@ -59,11 +61,10 @@ public class Lobby {
         window = new MainWindow(title);
         window.setLayout(null); // Use null layout to manually set component positions
         window.initialize();
-
-        buildWindow(window);
     }
 
-    private void buildWindow(MainWindow window) {
+    public void buildWindow() {
+        initialize();
         // Create content pane with null layout
         JPanel contentPane = new JPanel(null);
         contentPane.setOpaque(false); // Make content pane transparent
@@ -100,6 +101,7 @@ public class Lobby {
         contentPane.setSize(window_size);
         contentPane.setMinimumSize(window_size);
         contentPane.setBounds(0, 0, window_size.width, window_size.height);
+        window.setResizable(true);
     }
 
     private void buildContentPane(JPanel contentPane) {
@@ -179,10 +181,44 @@ public class Lobby {
     }
 
     // Prompts the user for a username, must be at least 3 characters up to a max of 20. Can only have Alphanumeric characters, "_" and "-"
-    public String promptUsername() {
-        return null;
+    // Cannot contain the string "(You)"
+    public Tuple<String, byte[]> promptUsername(String current_playername) {
+        byte[] current_picture = null;
+        for (Tuple<String, byte[]> iter : lobby_members) {
+            if (iter.x.contains("(You)")) {
+                current_picture = iter.y;
+                break;
+            }
+        }
+
+        ProfileEditor profileEditor = new ProfileEditor(current_playername, current_picture);
+        Tuple<String, byte[]> new_profile = profileEditor.render();
+
+        for (int i = 0; i < lobby_members.size(); i++) {
+            Tuple<String, byte[]> iter = lobby_members.get(i);
+            if (iter.x.contains("(You)")) {
+                lobby_members.set(i, new_profile);
+                break;
+            }
+        }
+
+        return new_profile;
     }
 
+    public void memberAssembly(String playername, byte[] image_bytes) {
+        lobby_members.add(new Tuple<String, byte[]>(playername, image_bytes));
+    }
+
+    public void memberAssembly(ArrayList<Tuple<String, byte[]>> members) {
+        for (int i = 0; i < members.size(); i++) {
+            lobby_members.add(members.get(i));
+        }
+        updateDisplay();
+    }
+
+    public ArrayList<Tuple<String, byte[]>> getPlayers() {
+        return lobby_members;
+    }
 
     // Add a new lobby member
     // Called by the Peer class when the server sends us new player data
