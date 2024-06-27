@@ -1,9 +1,12 @@
 ✔ Implement username saving on server through keyring @started(24-06-20 03:00) @done(24-06-20 03:13) @lasted(13m59s)
 
-☐ Add profile edit and start game buttons to lobby
-    - May need to pass Peer element down to Lobby
+✔ Add profile edit and start game buttons to lobby @started(24-06-27 18:34) @done(24-06-27 18:34) @lasted(54s)
+    ✔ May need to pass Peer element down to Lobby @done(24-06-27 18:34)
+    ✔ Profile edit scrapped @done(24-06-27 18:34)
 
 ☐ Check that multiple users work for lobby
+
+☐ Check that name changes and image changes get sent to all players
 
 ☐ Check that game start implementation works correctly
 
