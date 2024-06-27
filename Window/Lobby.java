@@ -6,11 +6,15 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 public class Lobby {
     // Array of strings to add to the title randomly
@@ -45,6 +49,8 @@ public class Lobby {
     
     // Main window for the lobby
     private MainWindow window;
+
+    private boolean[] ready_state = {false};
     
     // Constructor for the Lobby class
     public Lobby() {
@@ -107,6 +113,8 @@ public class Lobby {
     }
 
     private void buildContentPane(JPanel contentPane) {
+        addImportantButtons(contentPane);
+
         // Add each country label as well as icon + username combo label to the content pane
         for (COUNTRIES country : COUNTRIES.values()) {
             JLabel country_name = new JLabel(country.toString());
@@ -180,6 +188,35 @@ public class Lobby {
             player_labels[i].setBounds(x, y, 64, 85);
             
         }
+    }
+
+    private void addImportantButtons(JPanel contentPane) {
+
+        JButton ready_button = new JButton("Ready");
+        contentPane.add(ready_button);
+
+        ready_button.setBounds(25, 25, 125, 50);
+        ready_button.setFont(new Font("Elephant", 0, 24));
+        ready_button.setFocusable(false);
+
+        final Color green = new Color(16, 128, 16);
+        final Color red = new Color(192, 48, 16);
+        ready_button.setBackground(red);
+        
+        
+
+        ready_button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (ready_state[0] == false) {
+                    ready_state[0] = true;
+                    ready_button.setBackground(green);
+                } else {
+                    ready_state[0] = false;
+                    ready_button.setBackground(red);
+                }
+            }
+        });
     }
 
     // Prompts the user for a username, must be at least 3 characters up to a max of 20. Can only have Alphanumeric characters, "_" and "-"
@@ -262,8 +299,18 @@ public class Lobby {
 
                     player_labels[i].setBounds(user_bounds.x - (font_width / 4), user_bounds.y, font_width, user_bounds.height);
 
-                    Rectangle country_bounds = country_labels[i].getBounds();
-                    country_labels[i].setBounds(user_bounds.x - (font_width / 4), country_bounds.y, font_width, country_bounds.height);
+                    
+                    int country_font_width =  country_labels[i].getFontMetrics(country_labels[i].getFont()).stringWidth(country_labels[i].getText()) + 5;
+                    if (country_font_width < font_width) {
+                        Rectangle country_bounds = country_labels[i].getBounds();
+                        country_labels[i].setBounds(user_bounds.x - (font_width / 4), country_bounds.y, font_width, country_bounds.height);
+                    } else {
+                        Rectangle country_bounds = country_labels[i].getBounds();
+                        
+                        double middle = country_bounds.x + (country_bounds.width / 2) - 13;
+                        
+                        country_labels[i].setBounds((int)Math.floor(middle - (country_font_width / 2)), country_bounds.y, country_font_width, country_bounds.height);
+                    }
                 }
             }
         }
