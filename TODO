@@ -2,9 +2,9 @@
 
 ✔ Add profile edit and start game buttons to lobby @started(24-06-27 18:34) @done(24-06-27 18:34) @lasted(54s)
     ✔ May need to pass Peer element down to Lobby @done(24-06-27 18:34)
-    ✔ Profile edit scrapped @done(24-06-27 18:34)
+    ✘ Profile edit scrapped @cancelled(24-06-27 18:37)
 
-☐ Check that multiple users work for lobby
+☐ Check that multiple users work for lobby @started(24-06-27 18:37)
 
 ☐ Check that name changes and image changes get sent to all players
 
