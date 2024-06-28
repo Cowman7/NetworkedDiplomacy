@@ -6,7 +6,7 @@
 
 ☐ Check that multiple users work for lobby @started(24-06-27 18:37)
 
-☐ Check that name changes and image changes get sent to all players
+✘ Check that name changes and image changes get sent to all players @cancelled(24-06-27 19:46)
 
 ☐ Check that game start implementation works correctly
 
